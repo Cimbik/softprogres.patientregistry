@@ -9,8 +9,8 @@ public class BirthNumberValidator : IBirthNumberValidator
     /// <returns>True ak je rodné číslo v správnom formáte a validné podľa zákona, inak false.</returns>
     public bool IsBirthNumberValid(string birthNumber)
     {
-        // Odstránenie lomítka
-        string cleanBirthNumber = birthNumber.Replace("/", "");
+        // Orezanie prázdnych znakov pred a za rodným čislom a odstránenie lomítka
+        string cleanBirthNumber = birthNumber.Trim().Replace("/", "");
 
         // Kontrola dĺžky rodného čísla. Rodné čislo by malo mať 9, alebo 10 znakov
         if (cleanBirthNumber.Length != 9 && cleanBirthNumber.Length != 10)
@@ -40,7 +40,7 @@ public class BirthNumberValidator : IBirthNumberValidator
         month -= (month > 50) ? 50 : 0;
 
         // Určenie plného roku
-        year += (cleanBirthNumber.Length == 9) ? 1900 : 2000;
+        year += (birthNumber.Replace("/", "").Length == 9 || year >= 54) ? 1900 : 2000;
 
         // kontrola platnosti dátumu narodenia
         try
