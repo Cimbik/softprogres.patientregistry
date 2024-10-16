@@ -40,7 +40,7 @@ public class BirthNumberValidator : IBirthNumberValidator
         month -= (month > 50) ? 50 : 0;
 
         // Určenie plného roku
-        year += (birthNumber.Replace("/", "").Length == 9 || year >= 54) ? 1900 : 2000;
+        year += (cleanBirthNumber.Length == 9 || year >= 54) ? 1900 : 2000;
 
         // kontrola platnosti dátumu narodenia
         try
