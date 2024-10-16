@@ -39,7 +39,6 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
         return patient;
     }
 
-    // TODO zavolať funkcie z _birthNumberHelper tak, aby sa do databázy uložil k pacientovi jeho vek, pohlavie a dátum narodenia
     public async Task<Patient> CreatePatientAsync(PatientData patientData)
     {
         using var dbConnection = _dbConnectionFactory.OpenDbConnection();
@@ -50,13 +49,16 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
             BirthNumber = patientData.BirthNumber,
             FirstName = patientData.FirstName,
             LastName = patientData.LastName,
+            Sex = _birthNumberHelper.GetSexFromBirthNumber(patientData.BirthNumber),
             Email = patientData.Email,
             PhoneNumber = patientData.PhoneNumber,
             StreetAndNumber = patientData.StreetAndNumber,
             City = patientData.City,
             PostalCode = patientData.PostalCode,
             State = patientData.State,
-            Workplace = patientData.Workplace
+            Workplace = patientData.Workplace,
+            DateOfBirth = _birthNumberHelper.GetDateOfBirthFromBirthNumber(patientData.BirthNumber),
+            Age = _birthNumberHelper.GetAgeFromBirthNumber(patientData.BirthNumber)
         };
 
         // Ulož nového pacienta do databázy
@@ -67,7 +69,6 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
         return newPatient;
     }
 
-    // TODO zavolať funkcie z _birthNumberHelper tak, aby sa do databázy uložil k pacientovi jeho vek, pohlavie a dátum narodenia
     public async Task<Patient> UpdatePatientAsync(long patientId, PatientData patientData)
     {
         using var dbConnection = _dbConnectionFactory.OpenDbConnection();
@@ -79,13 +80,16 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
             BirthNumber = patientData.BirthNumber,
             FirstName = patientData.FirstName,
             LastName = patientData.LastName,
+            Sex = _birthNumberHelper.GetSexFromBirthNumber(patientData.BirthNumber),
             Email = patientData.Email,
             PhoneNumber = patientData.PhoneNumber,
             StreetAndNumber = patientData.StreetAndNumber,
             City = patientData.City,
             PostalCode = patientData.PostalCode,
             State = patientData.State,
-            Workplace = patientData.Workplace
+            Workplace = patientData.Workplace,
+            DateOfBirth = _birthNumberHelper.GetDateOfBirthFromBirthNumber(patientData.BirthNumber),
+            Age = _birthNumberHelper.GetAgeFromBirthNumber(patientData.BirthNumber)
         };
 
         // Ulož pacienta so zmenenými údajmi do databázy
