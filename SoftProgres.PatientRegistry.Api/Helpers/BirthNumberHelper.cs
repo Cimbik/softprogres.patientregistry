@@ -48,7 +48,6 @@ public class BirthNumberHelper : IBirthNumberHelper
     /// <returns>Pohlavie osoby</returns>
     public Sex GetSexFromBirthNumber(string birthNumber)
     {
-        // TODO implementovať získanie pohlavia osoby z rodného čísla.
-        throw new NotImplementedException();
+        return int.Parse(birthNumber.Substring(2, 2)) > 50 ? Sex.Female : Sex.Female;
     }
 }
