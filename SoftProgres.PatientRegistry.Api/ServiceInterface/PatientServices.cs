@@ -27,10 +27,14 @@ namespace SoftProgres.PatientRegistry.Api.ServiceInterface
             };
         }
 
-        // TODO - zavolať validáciu rodného čísla na mieste, kde je to vhodné
-        // TODO - v prípade chybného rodného čísla thrownúť HttpError.BadRequest("Rodné číslo nemá správny formát.");
         public async Task<CreatePatientResponse> Post(CreatePatient request)
         {
+            // Skontroluj či rodné číslo je validne
+            if ( _birthNumberValidator.IsBirthNumberValid(request.BirthNumber))
+            {
+                throw HttpError.BadRequest("Rodné číslo nemá správny formát.");
+            }
+
             // Skontroluj či rodné číslo už existuje
             if (await _dataProvider.BirthNumberExists(request.BirthNumber))
             {
@@ -47,10 +51,14 @@ namespace SoftProgres.PatientRegistry.Api.ServiceInterface
             };
         }
 
-        // TODO - zavolať validáciu rodného čísla na mieste, kde je to vhodné
-        // TODO - v prípade chybného rodného čísla thrownúť HttpError.BadRequest("Rodné číslo nemá správny formát.");
         public async Task<UpdatePatientResponse> Put(UpdatePatient request)
         {
+            // Skontroluj či rodné číslo je validne
+            if (_birthNumberValidator.IsBirthNumberValid(request.BirthNumber))
+            {
+                throw HttpError.BadRequest("Rodné číslo nemá správny formát.");
+            }
+
             // Skontroluj či rodné číslo už existuje
             if (await _dataProvider.BirthNumberExists(request.BirthNumber, request.PatientId))
             {
