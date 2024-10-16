@@ -12,8 +12,18 @@ public class BirthNumberHelper : IBirthNumberHelper
     /// <returns>Dátum narodenia osoby</returns>
     public DateTime GetDateOfBirthFromBirthNumber(string birthNumber)
     {
-        // TODO implementovať získanie dátumu narodenia osoby z rodného čísla.
-        throw new NotImplementedException();
+        // rozdelenie roku narodenia na rok, mesiac a dní
+        int year = int.Parse(birthNumber.Substring(0, 2));
+        int month = int.Parse(birthNumber.Substring(2, 2));
+        int day = int.Parse(birthNumber.Substring(4, 2));
+
+        // Ženy majú mesiace navýšené o 50
+        month -= (month > 50) ? 50 : 0;
+
+        // Určenie plného roku
+        year += (birthNumber.Replace("/", "").Length == 9 || year >= 54) ? 1900 : 2000;
+
+        return new DateTime(year, month, day);
     }
 
     /// <summary>
