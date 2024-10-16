@@ -34,10 +34,12 @@ public class BirthNumberHelper : IBirthNumberHelper
     /// <returns>Vek osoby</returns>
     public int GetAgeFromBirthNumber(string birthNumber)
     {
-        // TODO implementovať získanie veku osoby z rodného čísla.
-        throw new NotImplementedException();
-    }
+        int years = DateTime.Today.Year - GetDateOfBirthFromBirthNumber(birthNumber).Year;
 
+        // Kontrola, či už tento rok už boli narodeniny (ak nie, odpočítat 1) a vratenie veku
+        return GetDateOfBirthFromBirthNumber(birthNumber).Date > DateTime.Today.AddYears(-years) ? years-- : years; 
+    }
+     
     /// <summary>
     /// Získa pohlavie osoby z rodného čísla.
     /// Rodné číslo nie je potrebné validovať, predpokladajte, že je validné.
