@@ -48,6 +48,6 @@ public class BirthNumberHelper : IBirthNumberHelper
     /// <returns>Pohlavie osoby</returns>
     public Sex GetSexFromBirthNumber(string birthNumber)
     {
-        return int.Parse(birthNumber.Substring(2, 2)) > 50 ? Sex.Female : Sex.Female;
+        return int.Parse(birthNumber.Substring(2, 2)) > 50 ? Sex.Female : Sex.Male;
     }
 }
