@@ -9,6 +9,7 @@ using SoftProgres.PatientRegistry.Desktop.Helpers;
 using SoftProgres.PatientRegistry.Desktop.Models;
 using SoftProgres.PatientRegistry.Desktop.Views.Pages;
 using System.Collections.ObjectModel;
+using System.Windows;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
@@ -134,8 +135,15 @@ public partial class PatientRegistryViewModel(
     {
         var shouldDelete = false;
 
-        // TODO imeplementuje MessageBox, ktorý sa užívateľa spýta, či chce naozaj odstrániť pacienta.
-        // nastavte premennú shouldDelete na true, ak užívateľ zaklikne "Áno".
+        // Zobraz MessageBox s potvrdením a priamo vyhodnoť výsledok
+        System.Windows.MessageBoxResult result = MessageBox.Show("Naozaj chcete odstrániť pacienta?", "Potvrdenie", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+        // Kontrola výsledku
+        if (result == System.Windows.MessageBoxResult.Yes)
+        {
+            // Používateľ klikol na "Áno"
+            shouldDelete = true;
+        }
 
         if (shouldDelete)
         {
