@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Options;
+using Microsoft.Win32;
 using ServiceStack;
 using SoftProgres.PatientRegistry.Api.ServiceModel;
 using SoftProgres.PatientRegistry.Desktop.Config;
@@ -9,10 +10,13 @@ using SoftProgres.PatientRegistry.Desktop.Helpers;
 using SoftProgres.PatientRegistry.Desktop.Models;
 using SoftProgres.PatientRegistry.Desktop.Views.Pages;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text;
 using System.Windows;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
+using System.Linq;
 
 namespace SoftProgres.PatientRegistry.Desktop.ViewModels;
 
@@ -185,9 +189,38 @@ public partial class PatientRegistryViewModel(
     [RelayCommand(CanExecute = nameof(CanExportToCsv))]
     private async Task ExportToCsvAsync()
     {
-        // TODO Naprogramujte funkcionalitu exportu dát zoznamu pacientov do CSV.
-        // Užívateľ si musí vedieť vybrať cieľový súbor cez systémový dialog.
-        await Task.Delay(0);
+
+        // Otvor SaveFileDialog pre výber výstupného súboru
+        SaveFileDialog saveFileDialog = new SaveFileDialog
+        {
+            Filter = "CSV súbory (*.csv)|*.csv|Všetky súbory (*.*)|*.*",
+            Title = "Uložiť CSV súbor"
+        };
+
+        // Zobraz dialóg a ulož výsledok do premennej
+        bool? result = saveFileDialog.ShowDialog();
+
+        if (result == true)
+        {
+            string filePath = saveFileDialog.FileName;
+
+            // Export dát do CSV súboru
+            await Task.Run(() =>
+            {
+                StringBuilder csvContent = new StringBuilder();
+
+                // Pridanie hlavičky
+                csvContent.AppendLine("Id;BirthNumber;FirstName;LastName;Sex;Email;PhoneNumber;StreetAndNumber;City;PostalCode;State;Workplace;Age;DateOfBirth");
+
+                // Pridanie dát pacientov
+                csvContent.AppendLine(string.Join(Environment.NewLine, _patients.Select(p => string.Join(";", p.Id, p.BirthNumber, p.FirstName, p.LastName, p.Sex, p.Email,
+                                                                                                              p.PhoneNumber,p.StreetAndNumber, p.City, p.PostalCode,
+                                                                                                              p.State, p.Workplace, p.Age, p.DateOfBirth))));
+
+                // Uloženie do súboru
+                File.WriteAllText(filePath, csvContent.ToString());
+            });
+        }
     }
 
     private bool CanExportToCsv()
