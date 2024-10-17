@@ -16,7 +16,6 @@ using System.Windows;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
-using System.Linq;
 
 namespace SoftProgres.PatientRegistry.Desktop.ViewModels;
 
