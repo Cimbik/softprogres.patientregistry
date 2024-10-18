@@ -212,7 +212,7 @@ public partial class PatientRegistryViewModel(
                 csvContent.AppendLine("Id;BirthNumber;FirstName;LastName;Sex;Email;PhoneNumber;StreetAndNumber;City;PostalCode;State;Workplace;Age;DateOfBirth");
 
                 // Pridanie dát pacientov
-                csvContent.AppendLine(string.Join(Environment.NewLine, _patients.Select(p => string.Join(";", p.Id, p.BirthNumber, p.FirstName, p.LastName, p.Sex, p.Email,
+                csvContent.AppendLine(string.Join(Environment.NewLine, Patients.Select(p => string.Join(";", p.Id, p.BirthNumber, p.FirstName, p.LastName, p.Sex, p.Email,
                                                                                                               p.PhoneNumber,p.StreetAndNumber, p.City, p.PostalCode,
                                                                                                               p.State, p.Workplace, p.Age, p.DateOfBirth))));
 
