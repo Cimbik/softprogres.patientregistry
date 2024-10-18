@@ -34,12 +34,42 @@
             Margin="0 12 0 0"
             IsIndeterminate="True"
             Visibility="{Binding ViewModel.IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
-        <!-- TODO Vytvorte formulár na vytvorenie/zmenu pacienta, ktorý bude nabindovaný na properties objektu Pacienta
-         z ViewModel-u. Vzhľad, použité elementy a rozloženie formulára je na vás.
-         Meniť sa budú dať nasledujúce údaje: Rodné číslo, Meno, Priezvisko, E-mail, Telefón, Ulica, Mesto, PSČ, Štát, Práca.
-         Hodnoty Id, Vek, Dátum narodenia a Pohlavie nemeníte, sú riešené automaticky na backende.
-         Formulár sa odošle zavolaním commandu SavePatientCommand. Validáciu polí riešiť nemusíte. -->
-        <ui:Button 
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Rodné číslo" Grid.Row="0" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding ViewModel.CurrentPatient.BirthNumber, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="Meno" Grid.Row="1" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.FirstName, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="Priezvisko" Grid.Row="2" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.LastName, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="E-mail" Grid.Row="3" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.Email, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="Telefón" Grid.Row="4" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="Ulica" Grid.Row="5" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.StreetAndNumber, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="Mesto" Grid.Row="6" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.City, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="PSČ" Grid.Row="7" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.PostalCode, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="Štát" Grid.Row="8" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.State, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+            <Label Content="Práca" Grid.Row="9" VerticalAlignment="Center" Foreground="black"/>
+            <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding ViewModel.CurrentPatient.Workplace, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+        </Grid>
+        <ui:Button
             Margin="0 12 0 0"
             Content="Uložiť" 
             Command="{Binding ViewModel.SavePatientCommand}"
