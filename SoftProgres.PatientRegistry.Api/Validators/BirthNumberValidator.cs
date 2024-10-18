@@ -9,8 +9,49 @@ public class BirthNumberValidator : IBirthNumberValidator
     /// <returns>True ak je rodné číslo v správnom formáte a validné podľa zákona, inak false.</returns>
     public bool IsBirthNumberValid(string birthNumber)
     {
-        // TODO Implementujte validáciu rodného čísla na základe zákona 301/1995 Z. z. § 2 
-        // TODO https://www.slov-lex.sk/pravne-predpisy/SK/ZZ/1995/301/#paragraf-2
-        throw new NotImplementedException();
+        // Orezanie prázdnych znakov pred a za rodným čislom a odstránenie lomítka
+        string cleanBirthNumber = birthNumber.Trim().Replace("/", "");
+
+        // Kontrola dĺžky rodného čísla. Rodné čislo by malo mať 9, alebo 10 znakov
+        if (cleanBirthNumber.Length != 9 && cleanBirthNumber.Length != 10)
+        {
+            return false;
+        }
+
+        // prevod rodného čísla typu string na long a zároveň kontrola čí rodné číslo obsahuje iba čísla
+        long cleanBirthNumberInt;
+        if (!long.TryParse(cleanBirthNumber, out cleanBirthNumberInt))
+        {
+            return false;
+        }
+
+        // kontrola deliteľnosti rodného čísla 11 po roku 1954
+        if (cleanBirthNumber.Length == 10 && cleanBirthNumberInt % 11 != 0)
+        {
+            return false;
+        }
+
+        // rozdelenie roku narodenia na rok, mesiac a dní
+        int year = int.Parse(cleanBirthNumber.Substring(0, 2));
+        int month = int.Parse(cleanBirthNumber.Substring(2, 2));
+        int day = int.Parse(cleanBirthNumber.Substring(4, 2));
+
+        // Ženy majú mesiace navýšené o 50
+        month -= (month > 50) ? 50 : 0;
+
+        // Určenie plného roku
+        year += (cleanBirthNumber.Length == 9 || year >= 54) ? 1900 : 2000;
+
+        // kontrola platnosti dátumu narodenia
+        try
+        {
+            DateTime birthDate = new DateTime(year, month, day);
+        }
+        catch
+        {
+            return false; 
+        }
+
+        return true;
     }
 }
